@@ -1,5 +1,6 @@
 package com.hong.data.network
 
+import com.hong.data.BuildConfig
 import com.hong.data.constants.Constants.BASE_URL
 import com.hong.data.constants.Constants.DEFAULT_TIME_OUT
 import okhttp3.OkHttpClient
@@ -16,7 +17,11 @@ class RetrofitCreator @Inject constructor() {
     init {
 
         val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
-            HttpLoggingInterceptor.Level.BODY
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.BODY
+            }
         }
 
         okHttpClient = OkHttpClient.Builder().apply {
@@ -26,8 +31,8 @@ class RetrofitCreator @Inject constructor() {
             addInterceptor(httpLoggingInterceptor)
             addInterceptor { chain ->
                 val request = chain.request().newBuilder()
-                    .addHeader("X-Naver-Client-Id", "baPVy6Scd6jvsqAsrrHu")
-                    .addHeader("X-Naver-Client-Secret", "lCfi3Abd26")
+                    .addHeader("X-Naver-Client-Id", BuildConfig.NAVER_CLIENT_ID)
+                    .addHeader("X-Naver-Client-Secret", BuildConfig.NAVER_CLIENT_SECRET)
                     .build()
                 chain.proceed(request)
             }
