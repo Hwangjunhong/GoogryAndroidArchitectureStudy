@@ -40,6 +40,9 @@ dependencies {
 
     implementation project(path: ':data')
 
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+
     // Rx
     def rxjava_version = '2.2.19'
     def rxkotlin_version = '2.4.0'
